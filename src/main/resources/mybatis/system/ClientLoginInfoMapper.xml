@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.clientLoginInfo.mapper.ClientLoginInfoMapper">
+    
+    <resultMap type="ClientLoginInfo" id="ClientLoginInfoResult">
+        <result property="id"    column="id"    />
+        <result property="account"    column="account"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="token"    column="token"    />
+        <result property="timestamp"    column="timestamp"    />
+        <result property="recordDuration"    column="record_duration"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectClientLoginInfoVo">
+        select id, account, client_id, token, timestamp, record_duration, enabled, create_time, update_time, is_delete from client_login_info
+    </sql>
+
+    <select id="selectClientLoginInfoList" parameterType="ClientLoginInfo" resultMap="ClientLoginInfoResult">
+        <include refid="selectClientLoginInfoVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="token != null  and token != ''"> and token = #{token}</if>
+            <if test="timestamp != null "> and timestamp = #{timestamp}</if>
+            <if test="recordDuration != null "> and record_duration = #{recordDuration}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientLoginInfoById" parameterType="Long" resultMap="ClientLoginInfoResult">
+        <include refid="selectClientLoginInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClientLoginInfo" parameterType="ClientLoginInfo">
+        insert into client_login_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="account != null  and account != ''">account,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="token != null  and token != ''">token,</if>
+            <if test="timestamp != null ">timestamp,</if>
+            <if test="recordDuration != null ">record_duration,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="token != null  and token != ''">#{token},</if>
+            <if test="timestamp != null ">#{timestamp},</if>
+            <if test="recordDuration != null ">#{recordDuration},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientLoginInfo" parameterType="ClientLoginInfo">
+        update client_login_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="token != null  and token != ''">token = #{token},</if>
+            <if test="timestamp != null ">timestamp = #{timestamp},</if>
+            <if test="recordDuration != null ">record_duration = #{recordDuration},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientLoginInfoById" parameterType="Long">
+        delete from client_login_info where id = #{id}
+    </delete>
+
+    <delete id="deleteClientLoginInfoByIds" parameterType="String">
+        delete from client_login_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

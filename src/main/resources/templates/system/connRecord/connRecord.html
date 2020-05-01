@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>pad客户端运行账号：</p>
+                                <input type="text" name="account"/>
+                            </li>
+                            <li>
+                                <p>远程听诊连接唯一ID，用于标识一次连接：</p>
+                                <input type="text" name="remoteConnId"/>
+                            </li>
+                            <li>
+                                <p>Pad 设备唯一ID：</p>
+                                <input type="text" name="clientId"/>
+                            </li>
+                            <li>
+                                <p>听诊模式，1：心音 2：肺音：</p>
+                                <input type="text" name="auscultationMode"/>
+                            </li>
+                            <li>
+                                <p>通话模式 1：无  2：音频  3：音视频：</p>
+                                <input type="text" name="callMode"/>
+                            </li>
+                            <li>
+                                <p>发起听诊器编号：</p>
+                                <input type="text" name="sendStethId"/>
+                            </li>
+                            <li>
+                                <p>远程听诊持续时间 ：</p>
+                                <input type="text" name="duration"/>
+                            </li>
+                            <li>
+                                <p>通话模式为音频，音视频，存储通话音频文件：</p>
+                                <input type="text" name="audioFile"/>
+                            </li>
+                            <li>
+                                <p>显示排序：</p>
+                                <input type="text" name="sortOrder"/>
+                            </li>
+                            <li>
+                                <p>软删除，1=是 已删除，0=否 未删除：</p>
+                                <input type="text" name="isDelete"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:record:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:record:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:record:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:record:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:record:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:record:remove')}]];
+        var prefix = ctx + "system/record";
+        var datas = [[${@dict.getType('sys_yes_no')}]];
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "【请填写功能名称】",
+                columns: [{
+                    checkbox: true
+                },
+
+                {
+                    field : 'account', 
+                    title : 'pad客户端运行账号'
+                },
+                {
+                    field : 'remoteConnId', 
+                    title : '远程听诊连接唯一ID'
+                },
+                {
+                    field : 'clientId', 
+                    title : 'Pad 设备唯一ID'
+                },
+                {
+                    field : 'auscultationMode', 
+                    title : '听诊模式，1：心音 2：肺音'
+                },
+                {
+                    field : 'callMode', 
+                    title : '通话模式 1：无  2：音频  3：音视频'
+                },
+                {
+                    field : 'sendStethId', 
+                    title : '发起听诊器编号'
+                },
+                {
+                    field : 'recvStethIdList', 
+                    title : '接收听诊器编号组'
+                },
+                {
+                    field : 'duration', 
+                    title : '远程听诊持续时间 '
+                },
+                {
+                    field : 'audioFile', 
+                    title : '通话模式为音频，音视频，存储通话音频文件'
+                },
+                {
+                    field : 'sortOrder', 
+                    title : '显示排序'
+                },
+                {
+                    field : 'isDelete', 
+                    title : '软删除，1=是 已删除，0=否 未删除'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

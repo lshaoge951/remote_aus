@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-log-edit" th:object="${operationLog}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">操作记录ID：</label>
+                <div class="col-sm-8">
+                    <input name="opId" th:field="*{opId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据库操作账号：</label>
+                <div class="col-sm-8">
+                    <input name="dbAccount" th:field="*{dbAccount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">后台管理操作账号：</label>
+                <div class="col-sm-8">
+                    <input name="sysAccount" th:field="*{sysAccount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所属模块 1、听诊配置 2、本地教学 3、听诊录音 4、远程听诊 5、其他：</label>
+                <div class="col-sm-8">
+                    <input name="module" th:field="*{module}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">操作表：</label>
+                <div class="col-sm-8">
+                    <input name="table" th:field="*{table}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">操作类型 1：增加 2：修改 3：删除 4：查询：</label>
+                <div class="col-sm-8">
+                    <select name="type" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">具体操作细节，SQL语句：</label>
+                <div class="col-sm-8">
+                    <textarea name="detail" class="form-control">[[*{detail}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">软删除，1=是 已删除，0=否 未删除：</label>
+                <div class="col-sm-8">
+                    <input name="isDelete" th:field="*{isDelete}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/log";
+        $("#form-log-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-log-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

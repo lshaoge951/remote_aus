@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.parts.mapper.BodyPartsMapper">
+    
+    <resultMap type="BodyParts" id="BodyPartsResult">
+        <result property="id"    column="id"    />
+        <result property="bodyId"    column="body_id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="icon"    column="Icon"    />
+        <result property="waveformUrl"    column="waveform_url"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectBodyPartsVo">
+        select id, body_id, type, name, Icon, waveform_url, sort_order, enabled, create_time, update_time, is_delete from body_parts
+    </sql>
+
+    <select id="selectBodyPartsList" parameterType="BodyParts" resultMap="BodyPartsResult">
+        <include refid="selectBodyPartsVo"/>
+        <where>  
+            <if test="bodyId != null "> and body_id = #{bodyId}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="icon != null  and icon != ''"> and Icon = #{icon}</if>
+            <if test="waveformUrl != null  and waveformUrl != ''"> and waveform_url = #{waveformUrl}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectBodyPartsById" parameterType="Long" resultMap="BodyPartsResult">
+        <include refid="selectBodyPartsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBodyParts" parameterType="BodyParts">
+        insert into body_parts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="bodyId != null ">body_id,</if>
+            <if test="type != null ">type,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="icon != null  and icon != ''">Icon,</if>
+            <if test="waveformUrl != null  and waveformUrl != ''">waveform_url,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="bodyId != null ">#{bodyId},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="icon != null  and icon != ''">#{icon},</if>
+            <if test="waveformUrl != null  and waveformUrl != ''">#{waveformUrl},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBodyParts" parameterType="BodyParts">
+        update body_parts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bodyId != null ">body_id = #{bodyId},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="icon != null  and icon != ''">Icon = #{icon},</if>
+            <if test="waveformUrl != null  and waveformUrl != ''">waveform_url = #{waveformUrl},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBodyPartsById" parameterType="Long">
+        delete from body_parts where id = #{id}
+    </delete>
+
+    <delete id="deleteBodyPartsByIds" parameterType="String">
+        delete from body_parts where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

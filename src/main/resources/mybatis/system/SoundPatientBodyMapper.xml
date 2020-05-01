@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.soundPatientBody.mapper.SoundPatientBodyMapper">
+    
+    <resultMap type="SoundPatientBody" id="SoundPatientBodyResult">
+        <result property="id"    column="id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="soundType"    column="sound_type"    />
+        <result property="ranking"    column="ranking"    />
+        <result property="bodyId"    column="body_id"    />
+        <result property="soundUrl"    column="sound_url"    />
+        <result property="duration"    column="duration"    />
+        <result property="remark"    column="remark"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectSoundPatientBodyVo">
+        select id, record_id, sound_type, ranking, body_id, sound_url, duration, remark, enabled, create_time, update_time, is_delete from sound_patient_body
+    </sql>
+
+    <select id="selectSoundPatientBodyList" parameterType="SoundPatientBody" resultMap="SoundPatientBodyResult">
+        <include refid="selectSoundPatientBodyVo"/>
+        <where>  
+            <if test="recordId != null  and recordId != ''"> and record_id = #{recordId}</if>
+            <if test="soundType != null "> and sound_type = #{soundType}</if>
+            <if test="ranking != null "> and ranking = #{ranking}</if>
+            <if test="bodyId != null "> and body_id = #{bodyId}</if>
+            <if test="soundUrl != null  and soundUrl != ''"> and sound_url = #{soundUrl}</if>
+            <if test="duration != null "> and duration = #{duration}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectSoundPatientBodyById" parameterType="Long" resultMap="SoundPatientBodyResult">
+        <include refid="selectSoundPatientBodyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSoundPatientBody" parameterType="SoundPatientBody">
+        insert into sound_patient_body
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="recordId != null  and recordId != ''">record_id,</if>
+            <if test="soundType != null ">sound_type,</if>
+            <if test="ranking != null ">ranking,</if>
+            <if test="bodyId != null ">body_id,</if>
+            <if test="soundUrl != null  and soundUrl != ''">sound_url,</if>
+            <if test="duration != null ">duration,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="recordId != null  and recordId != ''">#{recordId},</if>
+            <if test="soundType != null ">#{soundType},</if>
+            <if test="ranking != null ">#{ranking},</if>
+            <if test="bodyId != null ">#{bodyId},</if>
+            <if test="soundUrl != null  and soundUrl != ''">#{soundUrl},</if>
+            <if test="duration != null ">#{duration},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSoundPatientBody" parameterType="SoundPatientBody">
+        update sound_patient_body
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null  and recordId != ''">record_id = #{recordId},</if>
+            <if test="soundType != null ">sound_type = #{soundType},</if>
+            <if test="ranking != null ">ranking = #{ranking},</if>
+            <if test="bodyId != null ">body_id = #{bodyId},</if>
+            <if test="soundUrl != null  and soundUrl != ''">sound_url = #{soundUrl},</if>
+            <if test="duration != null ">duration = #{duration},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSoundPatientBodyById" parameterType="Long">
+        delete from sound_patient_body where id = #{id}
+    </delete>
+
+    <delete id="deleteSoundPatientBodyByIds" parameterType="String">
+        delete from sound_patient_body where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

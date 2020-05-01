@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.deviceMgt.mapper.DeviceMgtMapper">
+    
+    <resultMap type="DeviceMgt" id="DeviceMgtResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="recordType"    column="record_type"    />
+        <result property="recordList"    column="record_list"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="status"    column="status"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="hosName"    column="hos_name"    />
+    </resultMap>
+
+    <sql id="selectDeviceMgtVo">
+        select id, device_id, customer_id, device_name, record_type, record_list, start_time, end_time, status, sort_order, enabled, create_time,hos_name, update_time, is_delete from device_mgt
+    </sql>
+
+    <select id="selectDeviceMgtList" parameterType="DeviceMgt" resultMap="DeviceMgtResult">
+        <include refid="selectDeviceMgtVo"/>
+        <where>  
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="customerId != null  and customerId != ''"> and customer_id = #{customerId}</if>
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="recordType != null "> and record_type = #{recordType}</if>
+            <if test="recordList != null  and recordList != ''"> and record_list = #{recordList}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectDeviceMgtById" parameterType="Long" resultMap="DeviceMgtResult">
+        <include refid="selectDeviceMgtVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDeviceMgt" parameterType="DeviceMgt">
+        insert into device_mgt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="deviceId != null  and deviceId != ''">device_id,</if>
+            <if test="customerId != null  and customerId != ''">customer_id,</if>
+            <if test="deviceName != null  and deviceName != ''">device_name,</if>
+            <if test="recordType != null ">record_type,</if>
+            <if test="recordList != null  and recordList != ''">record_list,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="status != null ">status,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="hosName != null ">hos_name,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="deviceId != null  and deviceId != ''">#{deviceId},</if>
+            <if test="customerId != null  and customerId != ''">#{customerId},</if>
+            <if test="deviceName != null  and deviceName != ''">#{deviceName},</if>
+            <if test="recordType != null ">#{recordType},</if>
+            <if test="recordList != null  and recordList != ''">#{recordList},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="hosName != null ">#{hosName},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDeviceMgt" parameterType="DeviceMgt">
+        update device_mgt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null  and deviceId != ''">device_id = #{deviceId},</if>
+            <if test="customerId != null  and customerId != ''">customer_id = #{customerId},</if>
+            <if test="deviceName != null  and deviceName != ''">device_name = #{deviceName},</if>
+            <if test="recordType != null ">record_type = #{recordType},</if>
+            <if test="recordList != null  and recordList != ''">record_list = #{recordList},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="hosName != null ">hos_name = #{hosName},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeviceMgtById" parameterType="Long">
+        delete from device_mgt where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceMgtByIds" parameterType="String">
+        delete from device_mgt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

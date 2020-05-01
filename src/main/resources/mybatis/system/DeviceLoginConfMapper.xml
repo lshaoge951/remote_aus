@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.conf.mapper.DeviceLoginConfMapper">
+    
+    <resultMap type="DeviceLoginConf" id="DeviceLoginConfResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="departments"    column="departments"    />
+        <result property="owner"    column="owner"    />
+        <result property="purpose"    column="purpose"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="connStatus"    column="conn_status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectDeviceLoginConfVo">
+        select id, device_id, client_id, account_id,device_name, departments, owner, purpose, sort_order, conn_status, create_time, update_time, is_delete from device_login_conf
+    </sql>
+
+    <select id="selectDeviceLoginConfList" parameterType="DeviceLoginConf" resultMap="DeviceLoginConfResult">
+        <include refid="selectDeviceLoginConfVo"/>
+        <where>  
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="departments != null  and departments != ''"> and departments = #{departments}</if>
+            <if test="owner != null  and owner != ''"> and owner = #{owner}</if>
+            <if test="purpose != null "> and purpose = #{purpose}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="connStatus != null "> and conn_status = #{connStatus}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectDeviceLoginConfById" parameterType="Long" resultMap="DeviceLoginConfResult">
+        <include refid="selectDeviceLoginConfVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDeviceLoginConf" parameterType="DeviceLoginConf">
+        insert into device_login_conf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="deviceId != null  and deviceId != ''">device_id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="accountId != null  and accountId != ''">account_id,</if>
+            <if test="deviceName != null  and deviceName != ''">device_name,</if>
+            <if test="departments != null  and departments != ''">departments,</if>
+            <if test="owner != null  and owner != ''">owner,</if>
+            <if test="purpose != null ">purpose,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="connStatus != null ">conn_status,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="uid != null ">uid,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="deviceId != null  and deviceId != ''">#{deviceId},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="accountId != null  and accountId != ''">#{accountId},</if>
+            <if test="deviceName != null  and deviceName != ''">#{deviceName},</if>
+            <if test="departments != null  and departments != ''">#{departments},</if>
+            <if test="owner != null  and owner != ''">#{owner},</if>
+            <if test="purpose != null ">#{purpose},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="connStatus != null ">#{connStatus},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="uid != null ">#{uid},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDeviceLoginConf" parameterType="DeviceLoginConf">
+        update device_login_conf
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null  and deviceId != ''">device_id = #{deviceId},</if>
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="deviceName != null  and deviceName != ''">device_name = #{deviceName},</if>
+            <if test="departments != null  and departments != ''">departments = #{departments},</if>
+            <if test="owner != null  and owner != ''">owner = #{owner},</if>
+            <if test="purpose != null ">purpose = #{purpose},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="connStatus != null ">conn_status = #{connStatus},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteDeviceLoginConfById" parameterType="Long">
+        delete from device_login_conf where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceLoginConfByIds" parameterType="String">
+        delete from device_login_conf where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

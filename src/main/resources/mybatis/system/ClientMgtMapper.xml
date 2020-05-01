@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.clientMgt.mapper.ClientMgtMapper">
+    
+    <resultMap type="ClientMgt" id="ClientMgtResult">
+        <result property="id"    column="id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="padImei"    column="pad_imei"    />
+        <result property="clientName"    column="client_name"    />
+        <result property="deviceNum"    column="device_num"    />
+        <result property="softwareVersion"    column="software_version"    />
+        <result property="status"    column="status"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectClientMgtVo">
+        select id, client_id, customer_id, pad_imei, client_name, device_num, software_version, status, sort_order, create_time, update_time, is_delete from client_mgt
+    </sql>
+
+    <select id="selectClientMgtList" parameterType="ClientMgt" resultMap="ClientMgtResult">
+        <include refid="selectClientMgtVo"/>
+        <where>  
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="customerId != null  and customerId != ''"> and customer_id = #{customerId}</if>
+            <if test="padImei != null  and padImei != ''"> and pad_imei = #{padImei}</if>
+            <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
+            <if test="deviceNum != null "> and device_num = #{deviceNum}</if>
+            <if test="softwareVersion != null  and softwareVersion != ''"> and software_version = #{softwareVersion}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientMgtById" parameterType="Long" resultMap="ClientMgtResult">
+        <include refid="selectClientMgtVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClientMgt" parameterType="ClientMgt">
+        insert into client_mgt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="customerId != null  and customerId != ''">customer_id,</if>
+            <if test="padImei != null  and padImei != ''">pad_imei,</if>
+            <if test="clientName != null  and clientName != ''">client_name,</if>
+            <if test="deviceNum != null ">device_num,</if>
+            <if test="softwareVersion != null  and softwareVersion != ''">software_version,</if>
+            <if test="status != null ">status,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="customerId != null  and customerId != ''">#{customerId},</if>
+            <if test="padImei != null  and padImei != ''">#{padImei},</if>
+            <if test="clientName != null  and clientName != ''">#{clientName},</if>
+            <if test="deviceNum != null ">#{deviceNum},</if>
+            <if test="softwareVersion != null  and softwareVersion != ''">#{softwareVersion},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientMgt" parameterType="ClientMgt">
+        update client_mgt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="customerId != null  and customerId != ''">customer_id = #{customerId},</if>
+            <if test="padImei != null  and padImei != ''">pad_imei = #{padImei},</if>
+            <if test="clientName != null  and clientName != ''">client_name = #{clientName},</if>
+            <if test="deviceNum != null ">device_num = #{deviceNum},</if>
+            <if test="softwareVersion != null  and softwareVersion != ''">software_version = #{softwareVersion},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientMgtById" parameterType="Long">
+        delete from client_mgt where id = #{id}
+    </delete>
+
+    <delete id="deleteClientMgtByIds" parameterType="String">
+        delete from client_mgt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

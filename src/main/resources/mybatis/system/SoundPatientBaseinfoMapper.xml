@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.baseinfo.mapper.SoundPatientBaseinfoMapper">
+    
+    <resultMap type="SoundPatientBaseinfo" id="SoundPatientBaseinfoResult">
+        <result property="id"    column="id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="patientSex"    column="patient_sex"    />
+        <result property="patientAge"    column="patient_age"    />
+        <result property="admissionNum"    column="admission_num"    />
+        <result property="department"    column="department"    />
+        <result property="hpi"    column="hpi"    />
+        <result property="pmh"    column="pmh"    />
+        <result property="chiefComplaint"    column="chief_complaint"    />
+        <result property="personalHistory"    column="personal_history"    />
+        <result property="treatmentPlan"    column="treatment_plan"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="doctorName"    column="doctor_name"    />
+        <result property="diagnosis"    column="diagnosis"    />
+        <result property="remark"    column="remark"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="paintType"    column="paint_type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="fileId"    column="file_id"    />
+    </resultMap>
+
+    <sql id="selectSoundPatientBaseinfoVo">
+        select id, record_id, patient_id, patient_name, patient_sex, patient_age, admission_num, department, hpi, pmh, chief_complaint, personal_history, treatment_plan,device_id, diagnosis, remark, enabled, create_time, update_time, is_delete,account_id,client_id,doctor_name,uid,file_id,paint_type from sound_patient_baseinfo
+    </sql>
+
+    <select id="selectSoundPatientBaseinfoList" parameterType="SoundPatientBaseinfo" resultMap="SoundPatientBaseinfoResult">
+        <include refid="selectSoundPatientBaseinfoVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="patientSex != null "> and patient_sex = #{patientSex}</if>
+            <if test="patientAge != null "> and patient_age = #{patientAge}</if>
+            <if test="admissionNum != null  and admissionNum != ''"> and admission_num = #{admissionNum}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="hpi != null  and hpi != ''"> and hpi = #{hpi}</if>
+            <if test="pmh != null  and pmh != ''"> and pmh = #{pmh}</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''"> and chief_complaint = #{chiefComplaint}</if>
+            <if test="personalHistory != null  and personalHistory != ''"> and personal_history = #{personalHistory}</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''"> and treatment_plan = #{treatmentPlan}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="uid != null  and uid != ''"> and uid = #{uid}</if>
+            <if test="diagnosis != null  and diagnosis != ''"> and diagnosis = #{diagnosis}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="paintType != null  and paintType != ''"> and paint_type = #{paintType}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+
+
+    <select id="selectSoundPatientBaseinfoShare" parameterType="SoundPatientBaseinfo" resultMap="SoundPatientBaseinfoResult">
+        <include refid="selectSoundPatientBaseinfoVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="patientSex != null "> and patient_sex = #{patientSex}</if>
+            <if test="patientAge != null "> and patient_age = #{patientAge}</if>
+            <if test="admissionNum != null  and admissionNum != ''"> and admission_num = #{admissionNum}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="hpi != null  and hpi != ''"> and hpi = #{hpi}</if>
+            <if test="pmh != null  and pmh != ''"> and pmh = #{pmh}</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''"> and chief_complaint = #{chiefComplaint}</if>
+            <if test="personalHistory != null  and personalHistory != ''"> and personal_history = #{personalHistory}</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''"> and treatment_plan = #{treatmentPlan}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="diagnosis != null  and diagnosis != ''"> and diagnosis = #{diagnosis}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="paintType != null  and paintType != ''"> and file_type = #{paintType}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+            and share != '0'
+
+        </where>
+    </select>
+
+
+
+
+    <select id="selectSoundPatientBaseinfoShareToMe" parameterType="SoundPatientBaseinfo" resultMap="SoundPatientBaseinfoResult">
+        <include refid="selectSoundPatientBaseinfoVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="patientSex != null "> and patient_sex = #{patientSex}</if>
+            <if test="patientAge != null "> and patient_age = #{patientAge}</if>
+            <if test="admissionNum != null  and admissionNum != ''"> and admission_num = #{admissionNum}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="hpi != null  and hpi != ''"> and hpi = #{hpi}</if>
+            <if test="pmh != null  and pmh != ''"> and pmh = #{pmh}</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''"> and chief_complaint = #{chiefComplaint}</if>
+            <if test="personalHistory != null  and personalHistory != ''"> and personal_history = #{personalHistory}</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''"> and treatment_plan = #{treatmentPlan}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="diagnosis != null  and diagnosis != ''"> and diagnosis = #{diagnosis}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="paintType != null  and paintType != ''"> and paint_type = #{paintType}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+            and share = #{accountId}
+
+        </where>
+    </select>
+
+
+    <select id="selectSoundPatientBaseinfoShareFromDept" parameterType="SoundPatientBaseinfo" resultMap="SoundPatientBaseinfoResult">
+        <include refid="selectSoundPatientBaseinfoVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="patientSex != null "> and patient_sex = #{patientSex}</if>
+            <if test="patientAge != null "> and patient_age = #{patientAge}</if>
+            <if test="admissionNum != null  and admissionNum != ''"> and admission_num = #{admissionNum}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="hpi != null  and hpi != ''"> and hpi = #{hpi}</if>
+            <if test="pmh != null  and pmh != ''"> and pmh = #{pmh}</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''"> and chief_complaint = #{chiefComplaint}</if>
+            <if test="personalHistory != null  and personalHistory != ''"> and personal_history = #{personalHistory}</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''"> and treatment_plan = #{treatmentPlan}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="diagnosis != null  and diagnosis != ''"> and diagnosis = #{diagnosis}</if>
+            <if test="paintType != null  and paintType != ''"> and paint_type = #{paintType}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+            and share = #{accountId}
+
+        </where>
+    </select>
+    
+    <select id="selectSoundPatientBaseinfoById" parameterType="Long" resultMap="SoundPatientBaseinfoResult">
+        <include refid="selectSoundPatientBaseinfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSoundPatientBaseinfo" parameterType="SoundPatientBaseinfo">
+        insert into sound_patient_baseinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="recordId != null  and recordId != ''">record_id,</if>
+            <if test="patientId != null  and patientId != ''">patient_id,</if>
+            <if test="patientName != null  and patientName != ''">patient_name,</if>
+            <if test="patientSex != null ">patient_sex,</if>
+            <if test="patientAge != null ">patient_age,</if>
+            <if test="admissionNum != null  and admissionNum != ''">admission_num,</if>
+            <if test="department != null  and department != ''">department,</if>
+            <if test="hpi != null  and hpi != ''">hpi,</if>
+            <if test="pmh != null  and pmh != ''">pmh,</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''">chief_complaint,</if>
+            <if test="personalHistory != null  and personalHistory != ''">personal_history,</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">treatment_plan,</if>
+            <if test="diagnosis != null  and diagnosis != ''">diagnosis,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="accountId != null  and accountId != ''">account_id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="doctorName != null  and doctorName != ''">doctor_name,</if>
+            <if test="uid != null  and uid != ''">uid,</if>
+            <if test="deviceId != null  and deviceId != ''">device_id,</if>
+            <if test="fileId != null  and fileId != ''">file_id,</if>
+            <if test="type != null  and fileId != ''">file_id,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="recordId != null  and recordId != ''">#{recordId},</if>
+            <if test="patientId != null  and patientId != ''">#{patientId},</if>
+            <if test="patientName != null  and patientName != ''">#{patientName},</if>
+            <if test="patientSex != null ">#{patientSex},</if>
+            <if test="patientAge != null ">#{patientAge},</if>
+            <if test="admissionNum != null  and admissionNum != ''">#{admissionNum},</if>
+            <if test="department != null  and department != ''">#{department},</if>
+            <if test="hpi != null  and hpi != ''">#{hpi},</if>
+            <if test="pmh != null  and pmh != ''">#{pmh},</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''">#{chiefComplaint},</if>
+            <if test="personalHistory != null  and personalHistory != ''">#{personalHistory},</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">#{treatmentPlan},</if>
+            <if test="diagnosis != null  and diagnosis != ''">#{diagnosis},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="accountId != null  and accountId != ''">#{accountId},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="doctorName != null  and doctorName != ''">#{doctorName},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+            <if test="deviceId != null  and deviceId != ''">#{deviceId},</if>
+            <if test="fileId != null  and fileId != ''">#{fileId},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSoundPatientBaseinfo" parameterType="SoundPatientBaseinfo">
+        update sound_patient_baseinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null  and recordId != ''">record_id = #{recordId},</if>
+            <if test="patientId != null  and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null  and patientName != ''">patient_name = #{patientName},</if>
+            <if test="patientSex != null ">patient_sex = #{patientSex},</if>
+            <if test="patientAge != null ">patient_age = #{patientAge},</if>
+            <if test="admissionNum != null  and admissionNum != ''">admission_num = #{admissionNum},</if>
+            <if test="department != null  and department != ''">department = #{department},</if>
+            <if test="hpi != null  and hpi != ''">hpi = #{hpi},</if>
+            <if test="pmh != null  and pmh != ''">pmh = #{pmh},</if>
+            <if test="chiefComplaint != null  and chiefComplaint != ''">chief_complaint = #{chiefComplaint},</if>
+            <if test="personalHistory != null  and personalHistory != ''">personal_history = #{personalHistory},</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">treatment_plan = #{treatmentPlan},</if>
+            <if test="diagnosis != null  and diagnosis != ''">diagnosis = #{diagnosis},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="Share" parameterType="SoundPatientBaseinfo">
+        update sound_patient_baseinfo
+        <trim prefix="SET" suffixOverrides=",">
+            share = #{accountId}
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <update id="deleteShare" parameterType="SoundPatientBaseinfo">
+        update sound_patient_baseinfo
+        <trim prefix="SET" suffixOverrides=",">
+            share = '0'
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <update id="deleteLogic" parameterType="SoundPatientBaseinfo">
+        update sound_patient_baseinfo
+        <trim prefix="SET" suffixOverrides=",">
+            is_delete = 1
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <delete id="deleteSoundPatientBaseinfoById" parameterType="Long">
+        delete from sound_patient_baseinfo where id = #{id}
+    </delete>
+
+    <delete id="deleteSoundPatientBaseinfoByIds" parameterType="String">
+        delete from sound_patient_baseinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

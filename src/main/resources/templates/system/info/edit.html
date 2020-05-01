@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-info-edit" th:object="${soundPatientInfo}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">录音的编号，每次录音生成一个唯一编号：</label>
+                <div class="col-sm-8">
+                    <input name="recordId" th:field="*{recordId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">患者唯一标识ID：</label>
+                <div class="col-sm-8">
+                    <input name="patientId" th:field="*{patientId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">声音类型</label>
+                <div class="col-sm-8">
+                    <select name="soundType" class="form-control m-b">
+                        <option value="">所有</option>
+                        <option value="1">心音</option>
+                        <option value="2">肺音</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/info";
+        $("#form-info-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-info-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

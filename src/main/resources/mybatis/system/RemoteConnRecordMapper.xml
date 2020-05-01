@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.connRecord.mapper.RemoteConnRecordMapper">
+    
+    <resultMap type="RemoteConnRecord" id="RemoteConnRecordResult">
+        <result property="id"    column="id"    />
+        <result property="account"    column="account"    />
+        <result property="remoteConnId"    column="remote_conn_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="auscultationMode"    column="auscultation_mode"    />
+        <result property="callMode"    column="call_mode"    />
+        <result property="sendStethId"    column="send_steth_id"    />
+        <result property="recvStethIdList"    column="recv_steth_id_list"    />
+        <result property="duration"    column="duration"    />
+        <result property="audioFile"    column="audio_file"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectRemoteConnRecordVo">
+        select id, account, remote_conn_id, client_id, auscultation_mode, call_mode, send_steth_id, recv_steth_id_list, duration, audio_file, sort_order, create_time, update_time, is_delete from remote_conn_record
+    </sql>
+
+    <select id="selectRemoteConnRecordList" parameterType="RemoteConnRecord" resultMap="RemoteConnRecordResult">
+        <include refid="selectRemoteConnRecordVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="remoteConnId != null "> and remote_conn_id = #{remoteConnId}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="auscultationMode != null "> and auscultation_mode = #{auscultationMode}</if>
+            <if test="callMode != null  and callMode != ''"> and call_mode = #{callMode}</if>
+            <if test="sendStethId != null  and sendStethId != ''"> and send_steth_id = #{sendStethId}</if>
+            <if test="recvStethIdList != null  and recvStethIdList != ''"> and recv_steth_id_list = #{recvStethIdList}</if>
+            <if test="duration != null "> and duration = #{duration}</if>
+            <if test="audioFile != null  and audioFile != ''"> and audio_file = #{audioFile}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectRemoteConnRecordById" parameterType="Long" resultMap="RemoteConnRecordResult">
+        <include refid="selectRemoteConnRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRemoteConnRecord" parameterType="RemoteConnRecord">
+        insert into remote_conn_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="account != null  and account != ''">account,</if>
+            <if test="remoteConnId != null ">remote_conn_id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="auscultationMode != null ">auscultation_mode,</if>
+            <if test="callMode != null  and callMode != ''">call_mode,</if>
+            <if test="sendStethId != null  and sendStethId != ''">send_steth_id,</if>
+            <if test="recvStethIdList != null  and recvStethIdList != ''">recv_steth_id_list,</if>
+            <if test="duration != null ">duration,</if>
+            <if test="audioFile != null  and audioFile != ''">audio_file,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="remoteConnId != null ">#{remoteConnId},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="auscultationMode != null ">#{auscultationMode},</if>
+            <if test="callMode != null  and callMode != ''">#{callMode},</if>
+            <if test="sendStethId != null  and sendStethId != ''">#{sendStethId},</if>
+            <if test="recvStethIdList != null  and recvStethIdList != ''">#{recvStethIdList},</if>
+            <if test="duration != null ">#{duration},</if>
+            <if test="audioFile != null  and audioFile != ''">#{audioFile},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRemoteConnRecord" parameterType="RemoteConnRecord">
+        update remote_conn_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="remoteConnId != null ">remote_conn_id = #{remoteConnId},</if>
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="auscultationMode != null ">auscultation_mode = #{auscultationMode},</if>
+            <if test="callMode != null  and callMode != ''">call_mode = #{callMode},</if>
+            <if test="sendStethId != null  and sendStethId != ''">send_steth_id = #{sendStethId},</if>
+            <if test="recvStethIdList != null  and recvStethIdList != ''">recv_steth_id_list = #{recvStethIdList},</if>
+            <if test="duration != null ">duration = #{duration},</if>
+            <if test="audioFile != null  and audioFile != ''">audio_file = #{audioFile},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRemoteConnRecordById" parameterType="Long">
+        delete from remote_conn_record where id = #{id}
+    </delete>
+
+    <delete id="deleteRemoteConnRecordByIds" parameterType="String">
+        delete from remote_conn_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

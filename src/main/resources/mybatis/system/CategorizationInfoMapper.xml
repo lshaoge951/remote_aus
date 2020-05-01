@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.info.mapper.CategorizationInfoMapper">
+    
+    <resultMap type="CategorizationInfo" id="CategorizationInfoResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="currentId"    column="current_id"    />
+        <result property="prevId"    column="prev_id"    />
+        <result property="layer"    column="layer"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectCategorizationInfoVo">
+        select id, name, type, data_type, current_id, prev_id, layer, sort_order, status, create_time, update_time, is_delete from categorization_info
+    </sql>
+
+    <select id="selectCategorizationInfoList" parameterType="CategorizationInfo" resultMap="CategorizationInfoResult">
+        <include refid="selectCategorizationInfoVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="dataType != null "> and data_type = #{dataType}</if>
+            <if test="currentId != null  and currentId != ''"> and current_id = #{currentId}</if>
+            <if test="prevId != null  and prevId != ''"> and prev_id = #{prevId}</if>
+            <if test="layer != null "> and layer = #{layer}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectCategorizationInfoById" parameterType="Long" resultMap="CategorizationInfoResult">
+        <include refid="selectCategorizationInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCategorizationInfo" parameterType="CategorizationInfo">
+        insert into categorization_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type != null ">type,</if>
+            <if test="dataType != null ">data_type,</if>
+            <if test="currentId != null  and currentId != ''">current_id,</if>
+            <if test="prevId != null  and prevId != ''">prev_id,</if>
+            <if test="layer != null ">layer,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="status != null ">status,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="dataType != null ">#{dataType},</if>
+            <if test="currentId != null  and currentId != ''">#{currentId},</if>
+            <if test="prevId != null  and prevId != ''">#{prevId},</if>
+            <if test="layer != null ">#{layer},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCategorizationInfo" parameterType="CategorizationInfo">
+        update categorization_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="dataType != null ">data_type = #{dataType},</if>
+            <if test="currentId != null  and currentId != ''">current_id = #{currentId},</if>
+            <if test="prevId != null  and prevId != ''">prev_id = #{prevId},</if>
+            <if test="layer != null ">layer = #{layer},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCategorizationInfoById" parameterType="Long">
+        delete from categorization_info where id = #{id}
+    </delete>
+
+    <delete id="deleteCategorizationInfoByIds" parameterType="String">
+        delete from categorization_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

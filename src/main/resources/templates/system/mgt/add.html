@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mgt-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户ID：</label>
+                <div class="col-sm-8">
+                    <input name="customerId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">customer_id 的父ID，存储机构或者分支机构 0为根节点：</label>
+                <div class="col-sm-8">
+                    <input name="prevId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户联系方式：</label>
+                <div class="col-sm-8">
+                    <input name="phone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">客户地址：</label>
+                <div class="col-sm-8">
+                    <textarea name="address" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">省份：</label>
+                <div class="col-sm-8">
+                    <input name="province" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">城市：</label>
+                <div class="col-sm-8">
+                    <input name="city" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备案的听诊器设备数量    听诊器设备备案需要更新此字段：</label>
+                <div class="col-sm-8">
+                    <input name="deviceNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备案的pad客户端数量    pad客户端备案需要更新此字段：</label>
+                <div class="col-sm-8">
+                    <input name="clientNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备案的账号数量    账号备案需要更新此字段：</label>
+                <div class="col-sm-8">
+                    <input name="accountNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">显示排序：</label>
+                <div class="col-sm-8">
+                    <input name="sortOrder" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">软删除，1=是 已删除，0=否 未删除：</label>
+                <div class="col-sm-8">
+                    <input name="isDelete" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/mgt"
+        $("#form-mgt-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-mgt-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

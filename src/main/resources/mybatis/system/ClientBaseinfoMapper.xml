@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.clientBaseinfo.mapper.ClientBaseinfoMapper">
+    
+    <resultMap type="com.haitang.project.system.clientBaseinfo.domain.ClientBaseinfo" id="ClientBaseinfoResult">
+        <result property="id"    column="id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="product"    column="product"    />
+        <result property="brand"    column="brand"    />
+        <result property="model"    column="model"    />
+        <result property="board"    column="board"    />
+        <result property="deviceSerial"    column="device_serial"    />
+        <result property="deviceSdk"    column="device_sdk"    />
+        <result property="androidVersion"    column="android_version"    />
+        <result property="defaultLanguage"    column="default_Language"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectClientBaseinfoVo">
+        select id, client_id, manufacturer, product, brand, model, board, device_serial, device_sdk, android_version, default_Language, create_time, update_time, is_delete from client_baseinfo
+    </sql>
+
+    <select id="selectClientBaseinfoList" parameterType="ClientBaseinfo" resultMap="ClientBaseinfoResult">
+        <include refid="selectClientBaseinfoVo"/>
+        <where>  
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="product != null  and product != ''"> and product = #{product}</if>
+            <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="board != null  and board != ''"> and board = #{board}</if>
+            <if test="deviceSerial != null  and deviceSerial != ''"> and device_serial = #{deviceSerial}</if>
+            <if test="deviceSdk != null  and deviceSdk != ''"> and device_sdk = #{deviceSdk}</if>
+            <if test="androidVersion != null  and androidVersion != ''"> and android_version = #{androidVersion}</if>
+            <if test="defaultLanguage != null  and defaultLanguage != ''"> and default_Language = #{defaultLanguage}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientBaseinfoById" parameterType="Long" resultMap="ClientBaseinfoResult">
+        <include refid="selectClientBaseinfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClientBaseinfo" parameterType="ClientBaseinfo">
+        insert into client_baseinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="manufacturer != null  and manufacturer != ''">manufacturer,</if>
+            <if test="product != null  and product != ''">product,</if>
+            <if test="brand != null  and brand != ''">brand,</if>
+            <if test="model != null  and model != ''">model,</if>
+            <if test="board != null  and board != ''">board,</if>
+            <if test="deviceSerial != null  and deviceSerial != ''">device_serial,</if>
+            <if test="deviceSdk != null  and deviceSdk != ''">device_sdk,</if>
+            <if test="androidVersion != null  and androidVersion != ''">android_version,</if>
+            <if test="defaultLanguage != null  and defaultLanguage != ''">default_Language,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="manufacturer != null  and manufacturer != ''">#{manufacturer},</if>
+            <if test="product != null  and product != ''">#{product},</if>
+            <if test="brand != null  and brand != ''">#{brand},</if>
+            <if test="model != null  and model != ''">#{model},</if>
+            <if test="board != null  and board != ''">#{board},</if>
+            <if test="deviceSerial != null  and deviceSerial != ''">#{deviceSerial},</if>
+            <if test="deviceSdk != null  and deviceSdk != ''">#{deviceSdk},</if>
+            <if test="androidVersion != null  and androidVersion != ''">#{androidVersion},</if>
+            <if test="defaultLanguage != null  and defaultLanguage != ''">#{defaultLanguage},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientBaseinfo" parameterType="ClientBaseinfo">
+        update client_baseinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="manufacturer != null  and manufacturer != ''">manufacturer = #{manufacturer},</if>
+            <if test="product != null  and product != ''">product = #{product},</if>
+            <if test="brand != null  and brand != ''">brand = #{brand},</if>
+            <if test="model != null  and model != ''">model = #{model},</if>
+            <if test="board != null  and board != ''">board = #{board},</if>
+            <if test="deviceSerial != null  and deviceSerial != ''">device_serial = #{deviceSerial},</if>
+            <if test="deviceSdk != null  and deviceSdk != ''">device_sdk = #{deviceSdk},</if>
+            <if test="androidVersion != null  and androidVersion != ''">android_version = #{androidVersion},</if>
+            <if test="defaultLanguage != null  and defaultLanguage != ''">default_Language = #{defaultLanguage},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientBaseinfoById" parameterType="Long">
+        delete from client_baseinfo where id = #{id}
+    </delete>
+
+    <delete id="deleteClientBaseinfoByIds" parameterType="String">
+        delete from client_baseinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

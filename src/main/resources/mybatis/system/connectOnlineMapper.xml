@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.connectOnline.mapper.ConnectOnlineMapper">
+    
+    <resultMap type="com.haitang.project.system.connectOnline.domain.ConnectOnline" id="SoundSelectResult">
+        <id property="id"       column="id"       />
+        <result property="token"    column="token"    />
+        <result property="address"     column="address"     />
+
+    </resultMap>
+    <select id="selectOnlineList" parameterType="java.lang.Integer" resultMap="SoundSelectResult">
+        select id, token, address from connect_online
+    </select>
+
+    <select id="selectOnline" parameterType="java.lang.String" resultMap="SoundSelectResult">
+        select id, token, address from connect_online where token = #{token} limit 0,1
+    </select>
+    <insert id="insertOnlineData">
+        insert into connect_online (token,address) values (#{token},#{address})
+    </insert>
+    <insert id="deleteOnlineData">
+        delete from connect_online where address = #{token}
+    </insert>
+</mapper>

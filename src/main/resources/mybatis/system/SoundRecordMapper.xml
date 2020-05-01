@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.record.mapper.SoundRecordMapper">
+    
+    <resultMap type="SoundRecord" id="SoundRecordResult">
+        <result property="id"    column="id"    />
+        <result property="account"    column="account"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="bodyId"    column="body_id"    />
+        <result property="recordType"    column="record_type"    />
+        <result property="soundType"    column="sound_type"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="timestamp"    column="timestamp"    />
+        <result property="updateNum"    column="update_num"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="uid"    column="uid"    />
+    </resultMap>
+
+    <sql id="selectSoundRecordVo">
+        select id, account, patient_id, record_id,body_id, record_type, sound_type, device_id, client_id,basic_info_id,file_id, timestamp, update_num, sort_order, enabled, create_time, update_time, is_delete,account_id,uid,file_duration from sound_record
+    </sql>
+
+    <select id="selectSoundRecordList" parameterType="SoundRecord" resultMap="SoundRecordResult">
+        <include refid="selectSoundRecordVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="recordType != null "> and record_type = #{recordType}</if>
+            <if test="soundType != null "> and sound_type = #{soundType}</if>
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="basicInfoId != null  and basicInfoId != ''"> and basic_info_id = #{basicInfoId}</if>
+            <if test="timestamp != null "> and timestamp = #{timestamp}</if>
+            <if test="updateNum != null "> and update_num = #{updateNum}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectSoundRecordById" parameterType="Long" resultMap="SoundRecordResult">
+        <include refid="selectSoundRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSoundRecord" parameterType="SoundRecord">
+        insert into sound_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="account != null  and account != ''">account,</if>
+            <if test="patientId != null  and patientId != ''">patient_id,</if>
+            <if test="recordId != null  and recordId != ''">record_id,</if>
+            <if test="bodyId != null  and bodyId != ''">body_id,</if>
+            <if test="recordType != null ">record_type,</if>
+            <if test="soundType != null ">sound_type,</if>
+            <if test="deviceId != null  and deviceId != ''">device_id,</if>
+            <if test="clientId != null  and clientId != ''">client_id,</if>
+            <if test="accountId != null  and account_id != ''">account_id,</if>
+            <if test="fileId != null  and fileId != ''">file_id,</if>
+            <if test="basicInfoId != null  and basicInfoId != ''">basic_info_id,</if>
+            <if test="uid != null  and uid != ''">uid,</if>
+            <if test="timestamp != null ">timestamp,</if>
+            <if test="updateNum != null ">update_num,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+            <if test="fileDuration != null ">file_duration,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="patientId != null  and patientId != ''">#{patientId},</if>
+            <if test="recordId != null  and recordId != ''">#{recordId},</if>
+            <if test="bodyId != null  and bodyId != ''">#{bodyId},</if>
+            <if test="recordType != null ">#{recordType},</if>
+            <if test="soundType != null ">#{soundType},</if>
+            <if test="deviceId != null  and deviceId != ''">#{deviceId},</if>
+            <if test="clientId != null  and clientId != ''">#{clientId},</if>
+            <if test="accountId != null  and account_id != ''">#{accountId},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+            <if test="timestamp != null ">#{timestamp},</if>
+            <if test="updateNum != null ">#{updateNum},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+            <if test="fileDuration != null ">#{fileDuration}</if>
+         </trim>
+    </insert>
+
+    <update id="updateSoundRecord" parameterType="SoundRecord">
+        update sound_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="patientId != null  and patientId != ''">patient_id = #{patientId},</if>
+            <if test="recordId != null  and recordId != ''">record_id = #{recordId},</if>
+            <if test="recordType != null ">record_type = #{recordType},</if>
+            <if test="soundType != null ">sound_type = #{soundType},</if>
+            <if test="deviceId != null  and deviceId != ''">device_id = #{deviceId},</if>
+            <if test="clientId != null  and clientId != ''">client_id = #{clientId},</if>
+            <if test="timestamp != null ">timestamp = #{timestamp},</if>
+            <if test="updateNum != null ">update_num = #{updateNum},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSoundRecordById" parameterType="Long">
+        delete from sound_record where id = #{id}
+    </delete>
+
+    <delete id="deleteSoundRecordByIds" parameterType="String">
+        delete from sound_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

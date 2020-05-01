@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.accountMgt.mapper.AccountMgtMapper">
+    
+    <resultMap type="com.haitang.project.system.accountMgt.domain.AccountMgt" id="AccountMgtResult">
+        <result property="id"    column="id"    />
+        <result property="account"    column="account"    />
+        <result property="password"    column="password"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="isFixed"    column="is_fixed"    />
+        <result property="clientList"    column="client_list"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="token"    column="token"    />
+    </resultMap>
+
+    <sql id="selectAccountMgtVo">
+        select id, account, password, customer_id, is_fixed, client_list, start_time, end_time, status, create_time, update_time, is_delete from account_mgt
+    </sql>
+
+    <select id="selectAccountMgtList" parameterType="AccountMgt" resultMap="AccountMgtResult">
+        <include refid="selectAccountMgtVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="customerId != null  and customerId != ''"> and customer_id = #{customerId}</if>
+            <if test="isFixed != null "> and is_fixed = #{isFixed}</if>
+            <if test="clientList != null  and clientList != ''"> and client_list = #{clientList}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountMgtById" parameterType="Long" resultMap="AccountMgtResult">
+        <include refid="selectAccountMgtVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAccountMgt" parameterType="AccountMgt">
+        insert into account_mgt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="account != null  and account != ''">account,</if>
+            <if test="password != null  and password != ''">password,</if>
+            <if test="customerId != null  and customerId != ''">customer_id,</if>
+            <if test="isFixed != null ">is_fixed,</if>
+            <if test="clientList != null  and clientList != ''">client_list,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="status != null ">status,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+            <if test="token != null ">token,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+            <if test="customerId != null  and customerId != ''">#{customerId},</if>
+            <if test="isFixed != null ">#{isFixed},</if>
+            <if test="clientList != null  and clientList != ''">#{clientList},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+            <if test="roken != null ">#{token},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountMgt" parameterType="AccountMgt">
+        update account_mgt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="customerId != null  and customerId != ''">customer_id = #{customerId},</if>
+            <if test="isFixed != null ">is_fixed = #{isFixed},</if>
+            <if test="clientList != null  and clientList != ''">client_list = #{clientList},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAccountMgtById" parameterType="Long">
+        delete from account_mgt where id = #{id}
+    </delete>
+
+    <delete id="deleteAccountMgtByIds" parameterType="String">
+        delete from account_mgt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.accountPermission.mapper.AccountPermissionMapper">
+    
+    <resultMap type="AccountPermission" id="AccountPermissionResult">
+        <result property="id"    column="id"    />
+        <result property="account"    column="account"    />
+        <result property="configure"    column="configure"    />
+        <result property="teaching"    column="teaching"    />
+        <result property="recording"    column="recording"    />
+        <result property="faraway"    column="faraway"    />
+        <result property="database"    column="databasees"    />
+        <result property="test"    column="test"    />
+    </resultMap>
+
+    <sql id="selectAccountPermissionVo">
+        select id, account, configure, teaching, recording, faraway, databasees, test from account_permission
+    </sql>
+
+    <select id="selectAccountPermissionList" parameterType="AccountPermission" resultMap="AccountPermissionResult">
+        <include refid="selectAccountPermissionVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="configure != null  and configure != ''"> and configure = #{configure}</if>
+            <if test="teaching != null  and teaching != ''"> and teaching = #{teaching}</if>
+            <if test="recording != null  and recording != ''"> and recording = #{recording}</if>
+            <if test="faraway != null  and faraway != ''"> and faraway = #{faraway}</if>
+            <if test="database != null  and database != ''"> and databasees = #{database}</if>
+            <if test="test != null  and test != ''"> and test = #{test}</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountPermissionById" parameterType="Long" resultMap="AccountPermissionResult">
+        <include refid="selectAccountPermissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAccountPermission" parameterType="AccountPermission" useGeneratedKeys="true" keyProperty="id">
+        insert into account_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="account != null  and account != ''">account,</if>
+            <if test="configure != null  and configure != ''">configure,</if>
+            <if test="teaching != null  and teaching != ''">teaching,</if>
+            <if test="recording != null  and recording != ''">recording,</if>
+            <if test="faraway != null  and faraway != ''">faraway,</if>
+            <if test="database != null  and database != ''">databasees,</if>
+            <if test="test != null  and test != ''">test,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="configure != null  and configure != ''">#{configure},</if>
+            <if test="teaching != null  and teaching != ''">#{teaching},</if>
+            <if test="recording != null  and recording != ''">#{recording},</if>
+            <if test="faraway != null  and faraway != ''">#{faraway},</if>
+            <if test="database != null  and database != ''">#{database},</if>
+            <if test="test != null  and test != ''">#{test},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountPermission" parameterType="AccountPermission">
+        update account_permission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="configure != null  and configure != ''">configure = #{configure},</if>
+            <if test="teaching != null  and teaching != ''">teaching = #{teaching},</if>
+            <if test="recording != null  and recording != ''">recording = #{recording},</if>
+            <if test="faraway != null  and faraway != ''">faraway = #{faraway},</if>
+            <if test="database != null  and database != ''">databasees = #{database},</if>
+            <if test="test != null  and test != ''">test = #{test},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAccountPermissionById" parameterType="Long">
+        delete from account_permission where id = #{id}
+    </delete>
+
+    <delete id="deleteAccountPermissionByIds" parameterType="String">
+        delete from account_permission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

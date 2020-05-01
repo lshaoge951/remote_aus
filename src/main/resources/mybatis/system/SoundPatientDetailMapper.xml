@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.detail.mapper.SoundPatientDetailMapper">
+    
+    <resultMap type="SoundPatientDetail" id="SoundPatientDetailResult">
+        <result property="id"    column="id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="dataNum"    column="data_num"    />
+        <result property="heartRate"    column="heart_rate"    />
+        <result property="bloodPressure"    column="blood_pressure"    />
+        <result property="other"    column="other"    />
+        <result property="auscultation"    column="auscultation"    />
+        <result property="eeg"    column="eeg"    />
+        <result property="heartSoul"    column="heart_soul"    />
+        <result property="treatmentPlan"    column="treatment_plan"    />
+        <result property="log"    column="log"    />
+        <result property="uid"    column="uid"    />
+        <result property="basicinfoId"    column="basic_info_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="enStep"    column="en_step"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectSoundPatientDetailVo">
+        select id, record_id, patient_id, data_type,en_step, data_num, heart_rate, blood_pressure, other, auscultation, eeg, heart_soul, treatment_plan, remark, enabled, create_time, update_time, is_delete ,log,basic_info_id,uid from sound_patient_detail
+    </sql>
+
+    <select id="selectSoundPatientDetailList" parameterType="SoundPatientDetail" resultMap="SoundPatientDetailResult" >
+        <include refid="selectSoundPatientDetailVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="dataType != null "> and data_type = #{dataType}</if>
+            <if test="dataNum != null "> and data_num = #{dataNum}</if>
+            <if test="heartRate != null  and heartRate != ''"> and heart_rate = #{heartRate}</if>
+            <if test="bloodPressure != null  and bloodPressure != ''"> and blood_pressure = #{bloodPressure}</if>
+            <if test="other != null  and other != ''"> and other = #{other}</if>
+            <if test="auscultation != null  and auscultation != ''"> and auscultation = #{auscultation}</if>
+            <if test="eeg != null  and eeg != ''"> and eeg = #{eeg}</if>
+            <if test="heartSoul != null  and heartSoul != ''"> and heart_soul = #{heartSoul}</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''"> and treatment_plan = #{treatmentPlan}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test=" uid != null "> and uid = #{uid}</if>
+            <if test=" basicinfoId != null "> and basic_info_id = #{basicinfoId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSoundPatientDetailById" parameterType="java.lang.Long" resultMap="SoundPatientDetailResult">
+        <include refid="selectSoundPatientDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectSoundPatientDetailByUId" parameterType="java.lang.String" resultMap="SoundPatientDetailResult">
+        <include refid="selectSoundPatientDetailVo"/>
+        where uid = #{uid}
+    </select>
+        
+    <insert id="insertSoundPatientDetail" parameterType="SoundPatientDetail"   useGeneratedKeys = "true" keyProperty="id"  keyColumn="id">
+        insert into sound_patient_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="recordId != null  and recordId != ''">record_id,</if>
+            <if test="patientId != null  and patientId != ''">patient_id,</if>
+            <if test="dataType != null ">data_type,</if>
+            <if test="dataNum != null ">data_num,</if>
+            <if test="heartRate != null  and heartRate != ''">heart_rate,</if>
+            <if test="bloodPressure != null  and bloodPressure != ''">blood_pressure,</if>
+            <if test="other != null  and other != ''">other,</if>
+            <if test="auscultation != null  and auscultation != ''">auscultation,</if>
+            <if test="eeg != null  and eeg != ''">eeg,</if>
+            <if test="heartSoul != null  and heartSoul != ''">heart_soul,</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">treatment_plan,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+            <if test="log != null  and log != ''">log,</if>
+            <if test="basicinfoId != null  and basicinfoId != ''">basic_info_id,</if>
+            <if test="uid != null  and uid != ''">uid,</if>
+            <if test="enStep != null  and enStep != ''">en_step,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="recordId != null  and recordId != ''">#{recordId},</if>
+            <if test="patientId != null  and patientId != ''">#{patientId},</if>
+            <if test="dataType != null ">#{dataType},</if>
+            <if test="dataNum != null ">#{dataNum},</if>
+            <if test="heartRate != null  and heartRate != ''">#{heartRate},</if>
+            <if test="bloodPressure != null  and bloodPressure != ''">#{bloodPressure},</if>
+            <if test="other != null  and other != ''">#{other},</if>
+            <if test="auscultation != null  and auscultation != ''">#{auscultation},</if>
+            <if test="eeg != null  and eeg != ''">#{eeg},</if>
+            <if test="heartSoul != null  and heartSoul != ''">#{heartSoul},</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">#{treatmentPlan},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+            <if test="log != null  and log != ''">#{log},</if>
+            <if test="basicinfoId != null  and basicinfoId != ''">#{basicinfoId},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+            <if test="enStep != null  and enStep != ''">#{enStep},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSoundPatientDetail" parameterType="SoundPatientDetail">
+        update sound_patient_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null  and recordId != ''">record_id = #{recordId},</if>
+            <if test="patientId != null  and patientId != ''">patient_id = #{patientId},</if>
+            <if test="dataType != null ">data_type = #{dataType},</if>
+            <if test="dataNum != null ">data_num = #{dataNum},</if>
+            <if test="heartRate != null  and heartRate != ''">heart_rate = #{heartRate},</if>
+            <if test="bloodPressure != null  and bloodPressure != ''">blood_pressure = #{bloodPressure},</if>
+            <if test="other != null  and other != ''">other = #{other},</if>
+            <if test="auscultation != null  and auscultation != ''">auscultation = #{auscultation},</if>
+            <if test="eeg != null  and eeg != ''">eeg = #{eeg},</if>
+            <if test="heartSoul != null  and heartSoul != ''">heart_soul = #{heartSoul},</if>
+            <if test="treatmentPlan != null  and treatmentPlan != ''">treatment_plan = #{treatmentPlan},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="basicinfoId != null  and basicinfoId != ''">basic_info_id = #{basicinfoId},</if>
+            <if test="uid != null  and uid != ''">uid = #{uid},</if>
+            <if test="log != null  and log != ''">log = #{log},</if>
+            <if test="enStep != null  and enStep != ''">en_step = #{enStep},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSoundPatientDetailById" parameterType="Long">
+        delete from sound_patient_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteSoundPatientDetailByIds" parameterType="String">
+        delete from sound_patient_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

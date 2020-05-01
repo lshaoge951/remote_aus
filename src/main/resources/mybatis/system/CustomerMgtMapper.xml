@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.mgt.mapper.CustomerMgtMapper">
+    
+    <resultMap type="CustomerMgt" id="CustomerMgtResult">
+        <result property="id"    column="id"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="prevId"    column="prev_id"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="address"    column="address"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="deviceNum"    column="device_num"    />
+        <result property="clientNum"    column="client_num"    />
+        <result property="accountNum"    column="account_num"    />
+        <result property="remark"    column="remark"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectCustomerMgtVo">
+        select id, customer_id, prev_id, name, phone, address, province, city, device_num, client_num, account_num, remark, sort_order, create_time, update_time, is_delete from customer_mgt
+    </sql>
+
+    <select id="selectCustomerMgtList" parameterType="CustomerMgt" resultMap="CustomerMgtResult">
+        <include refid="selectCustomerMgtVo"/>
+        <where>  
+            <if test="customerId != null  and customerId != ''"> and customer_id = #{customerId}</if>
+            <if test="prevId != null  and prevId != ''"> and prev_id = #{prevId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="deviceNum != null "> and device_num = #{deviceNum}</if>
+            <if test="clientNum != null "> and client_num = #{clientNum}</if>
+            <if test="accountNum != null "> and account_num = #{accountNum}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="createBegin != null "> and create_time &gt;= #{createBegin}</if>
+            <if test="createEnd != null "> and create_time &lt;= #{createEnd}</if>
+            <if test="updateBegin != null "> and update_time &gt;= #{updateBegin}</if>
+            <if test="updateEnd != null "> and update_time &gt;= #{updateEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectCustomerMgtById" parameterType="Long" resultMap="CustomerMgtResult">
+        <include refid="selectCustomerMgtVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCustomerMgt" parameterType="CustomerMgt">
+        insert into customer_mgt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="customerId != null  and customerId != ''">customer_id,</if>
+            <if test="prevId != null  and prevId != ''">prev_id,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="province != null  and province != ''">province,</if>
+            <if test="city != null  and city != ''">city,</if>
+            <if test="deviceNum != null ">device_num,</if>
+            <if test="clientNum != null ">client_num,</if>
+            <if test="accountNum != null ">account_num,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="customerId != null  and customerId != ''">#{customerId},</if>
+            <if test="prevId != null  and prevId != ''">#{prevId},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="province != null  and province != ''">#{province},</if>
+            <if test="city != null  and city != ''">#{city},</if>
+            <if test="deviceNum != null ">#{deviceNum},</if>
+            <if test="clientNum != null ">#{clientNum},</if>
+            <if test="accountNum != null ">#{accountNum},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCustomerMgt" parameterType="CustomerMgt">
+        update customer_mgt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null  and customerId != ''">customer_id = #{customerId},</if>
+            <if test="prevId != null  and prevId != ''">prev_id = #{prevId},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="province != null  and province != ''">province = #{province},</if>
+            <if test="city != null  and city != ''">city = #{city},</if>
+            <if test="deviceNum != null ">device_num = #{deviceNum},</if>
+            <if test="clientNum != null ">client_num = #{clientNum},</if>
+            <if test="accountNum != null ">account_num = #{accountNum},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerMgtById" parameterType="Long">
+        delete from customer_mgt where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerMgtByIds" parameterType="String">
+        delete from customer_mgt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

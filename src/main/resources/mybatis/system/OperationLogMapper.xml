@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.log.mapper.OperationLogMapper">
+    
+    <resultMap type="OperationLog" id="OperationLogResult">
+        <result property="id"    column="id"    />
+        <result property="opId"    column="op_id"    />
+        <result property="dbAccount"    column="db_account"    />
+        <result property="sysAccount"    column="sys_account"    />
+        <result property="module"    column="module"    />
+        <result property="table"    column="table"    />
+        <result property="type"    column="type"    />
+        <result property="detail"    column="detail"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectOperationLogVo">
+        select id, op_id, db_account, sys_account, module, table, type, detail, create_time, is_delete from operation_log
+    </sql>
+
+    <select id="selectOperationLogList" parameterType="OperationLog" resultMap="OperationLogResult">
+        <include refid="selectOperationLogVo"/>
+        <where>  
+            <if test="opId != null "> and op_id = #{opId}</if>
+            <if test="dbAccount != null  and dbAccount != ''"> and db_account = #{dbAccount}</if>
+            <if test="sysAccount != null  and sysAccount != ''"> and sys_account = #{sysAccount}</if>
+            <if test="module != null  and module != ''"> and module = #{module}</if>
+            <if test="table != null  and table != ''"> and table = #{table}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="detail != null  and detail != ''"> and detail = #{detail}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectOperationLogById" parameterType="Long" resultMap="OperationLogResult">
+        <include refid="selectOperationLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOperationLog" parameterType="OperationLog">
+        insert into operation_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="opId != null ">op_id,</if>
+            <if test="dbAccount != null  and dbAccount != ''">db_account,</if>
+            <if test="sysAccount != null  and sysAccount != ''">sys_account,</if>
+            <if test="module != null  and module != ''">module,</if>
+            <if test="table != null  and table != ''">table,</if>
+            <if test="type != null ">type,</if>
+            <if test="detail != null  and detail != ''">detail,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="isDelete != null ">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="opId != null ">#{opId},</if>
+            <if test="dbAccount != null  and dbAccount != ''">#{dbAccount},</if>
+            <if test="sysAccount != null  and sysAccount != ''">#{sysAccount},</if>
+            <if test="module != null  and module != ''">#{module},</if>
+            <if test="table != null  and table != ''">#{table},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="detail != null  and detail != ''">#{detail},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="isDelete != null ">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOperationLog" parameterType="OperationLog">
+        update operation_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="opId != null ">op_id = #{opId},</if>
+            <if test="dbAccount != null  and dbAccount != ''">db_account = #{dbAccount},</if>
+            <if test="sysAccount != null  and sysAccount != ''">sys_account = #{sysAccount},</if>
+            <if test="module != null  and module != ''">module = #{module},</if>
+            <if test="table != null  and table != ''">table = #{table},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="detail != null  and detail != ''">detail = #{detail},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="isDelete != null ">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOperationLogById" parameterType="Long">
+        delete from operation_log where id = #{id}
+    </delete>
+
+    <delete id="deleteOperationLogByIds" parameterType="String">
+        delete from operation_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

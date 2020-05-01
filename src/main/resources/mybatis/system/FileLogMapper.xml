@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haitang.project.system.fileLog.mapper.FileLogMapper">
+    
+    <resultMap type="com.haitang.project.system.fileLog.domain.FileLog" id="FileLogResult">
+        <id property="id"       column="id"       />
+        <result property="localUrl"    column="local_url"    />
+        <result property="serverUrl"     column="server_url"     />
+        <result property="fileType"    column="file_type"    />
+        <result property="fileName"     column="file_name"     />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+    <select id="selectFileLog" resultMap="FileLogResult">
+        select id, local_url,server_url,client_id,device_id,account_id,file_type,file_name,uid,is_delete from file_log
+        where 1=1
+        <if test="startTime != null and startTime != ''">
+            and update_time &gt;= #{startTime}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and update_time &lt;= #{endTime}
+        </if>
+    </select>
+    <select id="selectFileLogById" resultMap="FileLogResult">
+        select id, local_url,server_url,client_id,device_id,account_id,file_type,file_name,uid,is_delete from file_log
+        where 1=1
+        <if test="id != null and id != ''">
+            and uid &gt;= #{uid}
+        </if>
+        limit 0,1
+    </select>
+    <insert id="insertFileLog">
+        insert into file_log (local_url,server_url,file_type,file_name,create_time,client_id,account_id,device_id,uid,is_delete) values (#{localUrl},#{serverUrl},#{fileType},#{fileName}, NOW(),#{clientId},#{accountId},#{deviceId},#{uid},#{isDelete})
+    </insert>
+
+    <insert id="updateFileLog">
+        update file_log set local_url = #{localUrl} ,server_url =#{serverUrl} ,file_type = #{fileType},file_name = #{fileName},update_time = NOW(),is_delete = #{isDelete} where id=#{id}
+    </insert>
+</mapper>
